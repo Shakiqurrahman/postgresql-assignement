@@ -60,7 +60,7 @@ SELECT * FROM books
 
 -- 3️⃣ Find the total number of orders placed by each customer.
 SELECT customers.name, count(*) AS total_orders FROM orders
-JOIN customers ON orders.customer_id = customers.id
+JOIN customers ON orders.customer_id = customers.id 
 GROUP BY customers.NAME;
 
 
@@ -72,20 +72,22 @@ SELECT SUM(orders.quantity * books.price) as total_revenue from orders
 SELECT customers.name, COUNT(orders.id) AS total_orders FROM orders
     JOIN customers ON orders.customer_id = customers.id
     GROUP BY customers.name
-    HAVING count(orders.id) > 1
+    HAVING count(orders.id) > 1 -- Only include customers who have placed more than one order
+
 
 -- 6️⃣ Find the average price of books in the store.
 SELECT ROUND(AVG(price), 2) AS avg_book_price FROM books;
+-- Calculate the average price of all books and round to 2 decimal places
 
 -- 7️⃣ Increase the price of all books published before 2000 by 10%.
 UPDATE books
-SET price = ROUND(price * 1.10, 2)
-WHERE published_year < 2000;
+SET price = ROUND(price * 1.10, 2) -- Increase price by 10% and round to 2 decimal places
+WHERE published_year < 2000; -- Apply this change only to books published before 2000
 
 SELECT * FROM books;
 
 -- 8️⃣ Delete customers who haven't placed any orders.
 DELETE FROM customers
-WHERE id NOT IN (SELECT customer_id FROM orders);
+WHERE id NOT IN (SELECT customer_id FROM orders); -- Delete customers whose IDs are not in the orders table
 
 SELECT * from customers;
